@@ -1,0 +1,21 @@
+language: java
+jdk:
+  - openjdk8
+  - openjdk11
+  - openjdk12
+  - openjdk13
+
+#ignore default install step
+install: true
+
+services:
+  - docker
+
+#cache dependencies
+cache:
+  directories:
+    - $HOME/.m2/repository
+    - $HOME/.embedmongo/linux #for samples
+
+script: ./mvnw clean verify -Pdev
+
