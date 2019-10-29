@@ -25,12 +25,12 @@ public class AbstractMongoTest {
   @BeforeAll
   static void setupMongoContainer() throws IOException, InterruptedException {
     MONGO.execInContainer("/bin/bash", "-c", "mongo --eval 'rs.initiate()'");
-    waitTillMongoAcceptWites();
+    waitTillMongoAcceptWrites();
   }
 
   private static final long WAIT_TIMEOUT = TimeUnit.SECONDS.toNanos(10);
 
-  private static void waitTillMongoAcceptWites() throws InterruptedException {
+  private static void waitTillMongoAcceptWrites() throws InterruptedException {
     long start = System.nanoTime();
     try (MongoClient client =
         MongoClients.create(
