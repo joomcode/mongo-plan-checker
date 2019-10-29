@@ -9,6 +9,7 @@ import com.github.joomcode.mongoplanchecker.core.Violations;
 import com.github.joomcode.mongoplanchecker.testutil.AbstractMongoTest;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerAddress;
+import com.mongodb.client.model.Sorts;
 import com.mongodb.reactivestreams.client.MongoClients;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -187,6 +188,20 @@ class PlanCheckerMongoClientTest extends AbstractMongoTest {
 
     waitLock(lock, error);
     assertNotNull(value.get());
+  }
+
+  @Test
+  void testFindFirstSort() {
+    AtomicBoolean lock = new AtomicBoolean(true);
+    AtomicReference<Throwable> error = new AtomicReference<>();
+    collection
+        .find(new Document("id", 333))
+        .sort(Sorts.ascending("id100"))
+        .first()
+        .subscribe(new SingleSubscriber<>(error, lock));
+
+    BadPlanException exception = assertThrows(BadPlanException.class, () -> waitLock(lock, error));
+    assertEquals(new Violations(false, false, 0, 1), exception.getViolations());
   }
 
   @Test

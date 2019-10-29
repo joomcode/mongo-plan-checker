@@ -12,6 +12,8 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.CountOptions;
+import com.mongodb.client.model.FindOneAndReplaceOptions;
+import com.mongodb.client.model.Sorts;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.bson.Document;
@@ -158,6 +160,19 @@ class PlanCheckerMongoClientTest extends AbstractMongoTest {
             BadPlanException.class,
             () -> collection.replaceOne(new Document("foo", "bar"), new Document("foo", "bar2")));
     assertEquals(new Violations(false, false, 1, 0), exception.getViolations());
+  }
+
+  @Test
+  void testFindOneAndReplaceFilterSort() {
+    BadPlanException exception =
+        assertThrows(
+            BadPlanException.class,
+            () ->
+                collection.findOneAndReplace(
+                    new Document("id", "7"),
+                    new Document("foo", "bar2"),
+                    new FindOneAndReplaceOptions().sort(Sorts.ascending("absent"))));
+    assertEquals(new Violations(false, false, 0, 1), exception.getViolations());
   }
 
   @Test

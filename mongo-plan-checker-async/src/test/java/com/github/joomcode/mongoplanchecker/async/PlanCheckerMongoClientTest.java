@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.github.joomcode.mongoplanchecker.core.BadPlanException;
+import com.github.joomcode.mongoplanchecker.core.Nullable;
 import com.github.joomcode.mongoplanchecker.core.PlanChecker;
 import com.github.joomcode.mongoplanchecker.core.Violations;
 import com.github.joomcode.mongoplanchecker.testutil.AbstractMongoTest;
@@ -12,6 +13,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerAddress;
 import com.mongodb.async.SingleResultCallback;
 import com.mongodb.async.client.MongoClients;
+import com.mongodb.client.model.Sorts;
 import com.mongodb.client.result.DeleteResult;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
@@ -112,6 +114,14 @@ class PlanCheckerMongoClientTest extends AbstractMongoTest {
   }
 
   @Test
+  void testFindFilterSort() {
+    this.<Document>testMethodFilter(
+        callback ->
+            collection.find(new Document("id", 7)).sort(Sorts.ascending("id100")).first(callback),
+        new Violations(false, false, 0, 1));
+  }
+
+  @Test
   void testRemoveOneFilter() {
     this.<DeleteResult>testMethodFilter(
         callback -> collection.deleteOne(new Document("foo", "bar"), callback));
@@ -129,6 +139,11 @@ class PlanCheckerMongoClientTest extends AbstractMongoTest {
   }
 
   private <T> void testMethodFilter(Consumer<SingleResultCallback<T>> tester) {
+    testMethodFilter(tester, null);
+  }
+
+  private <T> void testMethodFilter(
+      Consumer<SingleResultCallback<T>> tester, @Nullable Violations violations) {
     AtomicBoolean lock = new AtomicBoolean(true);
     AtomicReference<Throwable> error = new AtomicReference<>();
     SingleResultCallback<T> callback =
@@ -140,7 +155,11 @@ class PlanCheckerMongoClientTest extends AbstractMongoTest {
     tester.accept(callback);
 
     BadPlanException exception = assertThrows(BadPlanException.class, () -> waitLock(lock, error));
-    assertEquals(new Violations(false, false, 1, 0), exception.getViolations());
+    if (violations == null) {
+      assertEquals(new Violations(false, false, 1, 0), exception.getViolations());
+    } else {
+      assertEquals(violations, exception.getViolations());
+    }
   }
 
   @Test

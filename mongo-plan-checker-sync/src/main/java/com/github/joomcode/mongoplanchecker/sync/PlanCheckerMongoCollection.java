@@ -31,20 +31,9 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
     this.checker = checker;
   }
 
-  private void check(Bson filter) {
-    check(filter, null, null);
-  }
-
-  private void check(Bson filter, Collation collation) {
-    check(filter, null, collation);
-  }
-
-  private void check(Bson filter, Bson hint) {
-    check(filter, hint, null);
-  }
-
   @SuppressWarnings("deprecation")
-  private void check(Bson filter, @Nullable Bson hint, @Nullable Collation collation) {
+  private void check(
+      Bson filter, @Nullable Bson hint, @Nullable Bson sort, @Nullable Collation collation) {
     if (filter.toBsonDocument(Document.class, getCodecRegistry()).isEmpty()) {
       return;
     }
@@ -53,6 +42,7 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
             collection
                 .find(filter)
                 .hint(hint)
+                .sort(sort)
                 .collation(collation)
                 .modifiers(new Document("$explain", true))
                 .first();
@@ -62,24 +52,12 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
     }
   }
 
-  private void check(ClientSession clientSession, Bson filter) {
-    check(clientSession, filter, null, null);
-  }
-
-  private void check(ClientSession clientSession, Bson filter, Bson hint) {
-    check(clientSession, filter, hint, null);
-  }
-
-  private void checkSessionFilterCollation(
-      ClientSession clientSession, Bson filter, Collation collation) {
-    check(clientSession, filter, null, collation);
-  }
-
   @SuppressWarnings("deprecation")
   private void check(
       ClientSession clientSession,
       Bson filter,
       @Nullable Bson hint,
+      @Nullable Bson sort,
       @Nullable Collation collation) {
     if (filter.toBsonDocument(Document.class, getCodecRegistry()).isEmpty()) {
       return;
@@ -89,6 +67,7 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
             collection
                 .find(clientSession, filter)
                 .hint(hint)
+                .sort(sort)
                 .collation(collation)
                 .modifiers(new Document("$explain", true))
                 .first();
@@ -113,7 +92,7 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
   @Override
   public UpdateResult replaceOne(
       Bson filter, TDocument replacement, ReplaceOptions replaceOptions) {
-    check(filter, replaceOptions.getCollation());
+    check(filter, null, null, replaceOptions.getCollation());
     return collection.replaceOne(filter, replacement, replaceOptions);
   }
 
@@ -182,7 +161,7 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
   @Override
   @SuppressWarnings("deprecation")
   public long count(Bson filter) {
-    check(filter);
+    check(filter, null, null, null);
     return collection.count(filter);
   }
 
@@ -190,7 +169,7 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
   @SuppressWarnings("deprecation")
   public long count(Bson filter, CountOptions options) {
     // TODO hintString is not supported
-    check(filter, options.getHint());
+    check(filter, options.getHint(), null, null);
     return collection.count(filter, options);
   }
 
@@ -203,7 +182,7 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
   @Override
   @SuppressWarnings("deprecation")
   public long count(ClientSession clientSession, Bson filter) {
-    check(clientSession, filter);
+    check(clientSession, filter, null, null, null);
     return collection.count(clientSession, filter);
   }
 
@@ -211,7 +190,7 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
   @SuppressWarnings("deprecation")
   public long count(ClientSession clientSession, Bson filter, CountOptions options) {
     // TODO hintString is not supported
-    check(filter, options.getHint());
+    check(filter, options.getHint(), null, null);
     return collection.count(clientSession, filter, options);
   }
 
@@ -222,14 +201,14 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
 
   @Override
   public long countDocuments(Bson filter) {
-    check(filter);
+    check(filter, null, null, null);
     return collection.countDocuments(filter);
   }
 
   @Override
   public long countDocuments(Bson filter, CountOptions options) {
     // TODO hintString is not supported
-    check(filter, options.getHint());
+    check(filter, options.getHint(), null, null);
     return collection.countDocuments(filter, options);
   }
 
@@ -240,14 +219,14 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
 
   @Override
   public long countDocuments(ClientSession clientSession, Bson filter) {
-    check(clientSession, filter);
+    check(clientSession, filter, null, null, null);
     return collection.countDocuments(clientSession, filter);
   }
 
   @Override
   public long countDocuments(ClientSession clientSession, Bson filter, CountOptions options) {
     // TODO hintString is not supported
-    check(clientSession, filter, options.getHint());
+    check(clientSession, filter, options.getHint(), null, null);
     return collection.countDocuments(clientSession, filter, options);
   }
 
@@ -480,49 +459,49 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
 
   @Override
   public DeleteResult deleteOne(Bson filter) {
-    check(filter);
+    check(filter, null, null, null);
     return collection.deleteOne(filter);
   }
 
   @Override
   public DeleteResult deleteOne(Bson filter, DeleteOptions options) {
-    check(filter, options.getCollation());
+    check(filter, null, null, options.getCollation());
     return collection.deleteOne(filter, options);
   }
 
   @Override
   public DeleteResult deleteOne(ClientSession clientSession, Bson filter) {
-    check(clientSession, filter);
+    check(clientSession, filter, null, null, null);
     return collection.deleteOne(clientSession, filter);
   }
 
   @Override
   public DeleteResult deleteOne(ClientSession clientSession, Bson filter, DeleteOptions options) {
-    checkSessionFilterCollation(clientSession, filter, options.getCollation());
+    check(clientSession, filter, null, null, options.getCollation());
     return collection.deleteOne(clientSession, filter, options);
   }
 
   @Override
   public DeleteResult deleteMany(Bson filter) {
-    check(filter);
+    check(filter, null, null, null);
     return collection.deleteMany(filter);
   }
 
   @Override
   public DeleteResult deleteMany(Bson filter, DeleteOptions options) {
-    check(filter, options.getCollation());
+    check(filter, null, null, options.getCollation());
     return collection.deleteMany(filter, options);
   }
 
   @Override
   public DeleteResult deleteMany(ClientSession clientSession, Bson filter) {
-    check(clientSession, filter);
+    check(clientSession, filter, null, null, null);
     return collection.deleteMany(clientSession, filter);
   }
 
   @Override
   public DeleteResult deleteMany(ClientSession clientSession, Bson filter, DeleteOptions options) {
-    checkSessionFilterCollation(clientSession, filter, options.getCollation());
+    check(clientSession, filter, null, null, options.getCollation());
     return collection.deleteMany(clientSession, filter, options);
   }
 
@@ -558,52 +537,52 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
       Bson filter,
       TDocument replacement,
       ReplaceOptions replaceOptions) {
-    check(clientSession, filter);
+    check(clientSession, filter, null, null, replaceOptions.getCollation());
     return collection.replaceOne(clientSession, filter, replacement, replaceOptions);
   }
 
   @Override
   public UpdateResult updateOne(Bson filter, Bson update) {
-    check(filter);
+    check(filter, null, null, null);
     return collection.updateOne(filter, update);
   }
 
   @Override
   public UpdateResult updateOne(Bson filter, Bson update, UpdateOptions updateOptions) {
-    check(filter, updateOptions.getCollation());
+    check(filter, null, null, updateOptions.getCollation());
     return collection.updateOne(filter, update, updateOptions);
   }
 
   @Override
   public UpdateResult updateOne(ClientSession clientSession, Bson filter, Bson update) {
-    check(clientSession, filter);
+    check(clientSession, filter, null, null, null);
     return collection.updateOne(clientSession, filter, update);
   }
 
   @Override
   public UpdateResult updateOne(
       ClientSession clientSession, Bson filter, Bson update, UpdateOptions updateOptions) {
-    checkSessionFilterCollation(clientSession, filter, updateOptions.getCollation());
+    check(clientSession, filter, null, null, updateOptions.getCollation());
     return collection.updateOne(clientSession, filter, update, updateOptions);
   }
 
   @Override
   public UpdateResult updateOne(Bson filter, List<? extends Bson> update) {
-    check(filter);
+    check(filter, null, null, null);
     return collection.updateOne(filter, update);
   }
 
   @Override
   public UpdateResult updateOne(
       Bson filter, List<? extends Bson> update, UpdateOptions updateOptions) {
-    check(filter, updateOptions.getCollation());
+    check(filter, null, null, updateOptions.getCollation());
     return collection.updateOne(filter, update, updateOptions);
   }
 
   @Override
   public UpdateResult updateOne(
       ClientSession clientSession, Bson filter, List<? extends Bson> update) {
-    check(clientSession, filter);
+    check(clientSession, filter, null, null, null);
     return collection.updateOne(clientSession, filter, update);
   }
 
@@ -613,51 +592,51 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
       Bson filter,
       List<? extends Bson> update,
       UpdateOptions updateOptions) {
-    checkSessionFilterCollation(clientSession, filter, updateOptions.getCollation());
+    check(clientSession, filter, null, null, updateOptions.getCollation());
     return collection.updateOne(clientSession, filter, update, updateOptions);
   }
 
   @Override
   public UpdateResult updateMany(Bson filter, Bson update) {
-    check(filter);
+    check(filter, null, null, null);
     return collection.updateMany(filter, update);
   }
 
   @Override
   public UpdateResult updateMany(Bson filter, Bson update, UpdateOptions updateOptions) {
-    check(filter);
+    check(filter, null, null, updateOptions.getCollation());
     return collection.updateMany(filter, update, updateOptions);
   }
 
   @Override
   public UpdateResult updateMany(ClientSession clientSession, Bson filter, Bson update) {
-    check(clientSession, filter);
+    check(clientSession, filter, null, null, null);
     return collection.updateMany(clientSession, filter, update);
   }
 
   @Override
   public UpdateResult updateMany(
       ClientSession clientSession, Bson filter, Bson update, UpdateOptions updateOptions) {
-    check(clientSession, filter);
+    check(clientSession, filter, null, null, updateOptions.getCollation());
     return collection.updateMany(clientSession, filter, update, updateOptions);
   }
 
   @Override
   public UpdateResult updateMany(Bson filter, List<? extends Bson> update) {
-    check(filter);
+    check(filter, null, null, null);
     return collection.updateMany(filter, update);
   }
 
   @Override
   public UpdateResult updateMany(Bson filter, List<? extends Bson> update, UpdateOptions options) {
-    check(filter, options.getCollation());
+    check(filter, null, null, options.getCollation());
     return collection.updateMany(filter, update, options);
   }
 
   @Override
   public UpdateResult updateMany(
       ClientSession clientSession, Bson filter, List<? extends Bson> update) {
-    check(clientSession, filter);
+    check(clientSession, filter, null, null, null);
     return collection.updateMany(clientSession, filter, update);
   }
 
@@ -667,55 +646,52 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
       Bson filter,
       List<? extends Bson> update,
       UpdateOptions updateOptions) {
-    checkSessionFilterCollation(clientSession, filter, updateOptions.getCollation());
+    check(clientSession, filter, null, null, updateOptions.getCollation());
     return collection.updateMany(clientSession, filter, update);
   }
 
   @Override
   public TDocument findOneAndDelete(Bson filter) {
-    check(filter);
+    check(filter, null, null, null);
     return collection.findOneAndDelete(filter);
   }
 
   @Override
   public TDocument findOneAndDelete(Bson filter, FindOneAndDeleteOptions options) {
-    // TODO should we check sort here?
-    check(filter);
+    check(filter, null, options.getSort(), options.getCollation());
     return collection.findOneAndDelete(filter, options);
   }
 
   @Override
   public TDocument findOneAndDelete(ClientSession clientSession, Bson filter) {
-    check(clientSession, filter);
+    check(clientSession, filter, null, null, null);
     return collection.findOneAndDelete(clientSession, filter);
   }
 
   @Override
   public TDocument findOneAndDelete(
       ClientSession clientSession, Bson filter, FindOneAndDeleteOptions options) {
-    // TODO should we check sort here?
-    check(clientSession, filter);
+    check(clientSession, filter, null, options.getSort(), options.getCollation());
     return collection.findOneAndDelete(clientSession, filter, options);
   }
 
   @Override
   public TDocument findOneAndReplace(Bson filter, TDocument replacement) {
-    check(filter);
+    check(filter, null, null, null);
     return collection.findOneAndReplace(filter, replacement);
   }
 
   @Override
   public TDocument findOneAndReplace(
       Bson filter, TDocument replacement, FindOneAndReplaceOptions options) {
-    // TODO should we check sort here?
-    check(filter);
+    check(filter, null, options.getSort(), options.getCollation());
     return collection.findOneAndReplace(filter, replacement, options);
   }
 
   @Override
   public TDocument findOneAndReplace(
       ClientSession clientSession, Bson filter, TDocument replacement) {
-    check(clientSession, filter);
+    check(clientSession, filter, null, null, null);
     return collection.findOneAndReplace(clientSession, filter, replacement);
   }
 
@@ -725,55 +701,52 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
       Bson filter,
       TDocument replacement,
       FindOneAndReplaceOptions options) {
-    // TODO should we check sort here?
-    check(clientSession, filter);
+    check(clientSession, filter, null, options.getSort(), null);
     return collection.findOneAndReplace(clientSession, filter, replacement, options);
   }
 
   @Override
   public TDocument findOneAndUpdate(Bson filter, Bson update) {
-    check(filter);
+    check(filter, null, null, null);
     return collection.findOneAndUpdate(filter, update);
   }
 
   @Override
   public TDocument findOneAndUpdate(Bson filter, Bson update, FindOneAndUpdateOptions options) {
-    // TODO should we check sort here?
-    check(filter);
+    check(filter, null, options.getSort(), options.getCollation());
     return collection.findOneAndUpdate(filter, update, options);
   }
 
   @Override
   public TDocument findOneAndUpdate(ClientSession clientSession, Bson filter, Bson update) {
-    check(clientSession, filter);
+    check(clientSession, filter, null, null, null);
     return collection.findOneAndUpdate(clientSession, filter, update);
   }
 
   @Override
   public TDocument findOneAndUpdate(
       ClientSession clientSession, Bson filter, Bson update, FindOneAndUpdateOptions options) {
-    // TODO should we check sort here?
-    check(clientSession, filter);
+    check(clientSession, filter, null, options.getSort(), options.getCollation());
     return collection.findOneAndUpdate(clientSession, filter, update, options);
   }
 
   @Override
   public TDocument findOneAndUpdate(Bson filter, List<? extends Bson> update) {
-    check(filter);
+    check(filter, null, null, null);
     return collection.findOneAndUpdate(filter, update);
   }
 
   @Override
   public TDocument findOneAndUpdate(
       Bson filter, List<? extends Bson> update, FindOneAndUpdateOptions options) {
-    check(filter, options.getCollation());
+    check(filter, null, options.getSort(), options.getCollation());
     return collection.findOneAndUpdate(filter, update, options);
   }
 
   @Override
   public TDocument findOneAndUpdate(
       ClientSession clientSession, Bson filter, List<? extends Bson> update) {
-    check(clientSession, filter);
+    check(clientSession, filter, null, null, null);
     return collection.findOneAndUpdate(clientSession, filter, update);
   }
 
@@ -783,7 +756,7 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
       Bson filter,
       List<? extends Bson> update,
       FindOneAndUpdateOptions options) {
-    check(clientSession, filter);
+    check(clientSession, filter, null, options.getSort(), options.getCollation());
     return collection.findOneAndUpdate(clientSession, filter, update, options);
   }
 
