@@ -50,12 +50,12 @@
     </properties>
 
     <modules>
-        <module>mongo-plan-checker-core</module>
-        <module>mongo-plan-checker-sync</module>
-        <module>mongo-plan-checker-async</module>
-        <module>mongo-plan-checker-sync-spring-data</module>
-        <module>mongo-plan-checker-reactivestreams</module>
-        <module>mongo-plan-checker-reactivestreams-spring-data</module>
+        <module>core</module>
+        <module>sync</module>
+        <module>async</module>
+        <module>spring-data-sync</module>
+        <module>reactivestreams</module>
+        <module>spring-data-reactive</module>
     </modules>
 
     <profiles>
@@ -65,9 +65,8 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>mongo-plan-checker-testutil</module>
-                <module>mongo-plan-checker-sync-spring-boot-sample</module>
-                <module>mongo-plan-checker-reactivestreams-spring-boot-sample</module>
+                <module>testutil</module>
+                <module>samples</module>
             </modules>
         </profile>
         <profile>
