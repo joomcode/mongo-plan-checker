@@ -172,6 +172,12 @@ public class PlanCheckerFindIterable<TResult> implements FindIterable<TResult> {
   }
 
   @Override
+  public FindIterable<TResult> hintString(String hint) {
+    iterable.hintString(hint);
+    return this;
+  }
+
+  @Override
   public FindIterable<TResult> max(Bson max) {
     iterable.max(max);
     return this;

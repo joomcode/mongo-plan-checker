@@ -143,6 +143,12 @@ public class PlanCheckerFindPublisher<TResult> implements FindPublisher<TResult>
   }
 
   @Override
+  public FindPublisher<TResult> hintString(String hint) {
+    p.hintString(hint);
+    return this;
+  }
+
+  @Override
   public PlanCheckerFindPublisher<TResult> max(Bson max) {
     p.max(max);
     return this;

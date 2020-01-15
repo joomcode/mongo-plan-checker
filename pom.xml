@@ -41,9 +41,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <mongo-driver.version>3.11.1</mongo-driver.version>
-        <mongo-reactivestreams.version>1.12.0</mongo-reactivestreams.version>
-        <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
+        <mongo-driver.version>3.12.0</mongo-driver.version>
+        <mongo-reactivestreams.version>1.13.0</mongo-reactivestreams.version>
+        <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
         <junit.version>5.5.2</junit.version>
 
         <java.version>1.8</java.version>

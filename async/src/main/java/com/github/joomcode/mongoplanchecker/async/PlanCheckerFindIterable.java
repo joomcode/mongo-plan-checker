@@ -181,6 +181,12 @@ public class PlanCheckerFindIterable<TDocument> implements FindIterable<TDocumen
   }
 
   @Override
+  public FindIterable<TDocument> hintString(String hint) {
+    it.hintString(hint);
+    return this;
+  }
+
+  @Override
   public FindIterable<TDocument> max(Bson max) {
     it.max(max);
     return this;
