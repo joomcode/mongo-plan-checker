@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -9,15 +8,15 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mongo-plan-checker-async</artifactId>
+    <artifactId>mongo-plan-checker-reactivestreams4</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>org.mongodb</groupId>
-            <artifactId>mongodb-driver-async</artifactId>
+            <artifactId>mongodb-driver-reactivestreams</artifactId>
+            <version>${mongo-driver4.version}</version>
             <scope>provided</scope>
-            <version>${mongo-driver.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -39,7 +38,7 @@
                     <groupId>org.mongodb</groupId>
                     <artifactId>mongodb-driver-sync</artifactId>
                     <scope>test</scope>
-                    <version>${mongo-driver.version}</version>
+                    <version>${mongo-driver4.version}</version>
                 </dependency>
             </dependencies>
         </profile>

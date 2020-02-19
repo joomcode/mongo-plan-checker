@@ -8,6 +8,7 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.InsertOneModel;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import org.bson.Document;
@@ -47,7 +48,7 @@ public class AbstractMongoTest {
           client.getDatabase("test").getCollection("connectionTest");
       while (true) {
         try {
-          collection.insertOne(new Document("foo", "bar"));
+          collection.bulkWrite(singletonList(new InsertOneModel<>(new Document("foo", "bar"))));
         } catch (MongoNotPrimaryException e) {
           if (System.nanoTime() - start > WAIT_TIMEOUT) {
             throw new RuntimeException("Mongo do not want to become primary", e);

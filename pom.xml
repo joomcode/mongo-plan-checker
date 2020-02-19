@@ -41,8 +41,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <mongo-driver.version>3.12.1</mongo-driver.version>
-        <mongo-reactivestreams.version>1.13.0</mongo-reactivestreams.version>
+        <mongo-driver.version>3.12.2</mongo-driver.version>
+        <mongo-reactivestreams.version>1.13.1</mongo-reactivestreams.version>
+        <mongo-driver4.version>4.0.0</mongo-driver4.version>
         <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
         <junit.version>5.6.0</junit.version>
 
@@ -52,9 +53,11 @@
     <modules>
         <module>core</module>
         <module>sync</module>
+        <module>sync4</module>
         <module>async</module>
         <module>spring-data-sync</module>
         <module>reactivestreams</module>
+        <module>reactivestreams4</module>
         <module>spring-data-reactive</module>
     </modules>
 
@@ -117,28 +120,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- latest mongodb-driver-reactivestreams does not always depend on latest main driver-->
-            <dependency>
-                <groupId>org.mongodb</groupId>
-                <artifactId>bson</artifactId>
-                <version>${mongo-driver.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mongodb</groupId>
-                <artifactId>mongodb-driver-core</artifactId>
-                <version>${mongo-driver.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mongodb</groupId>
-                <artifactId>mongodb-driver-sync</artifactId>
-                <version>${mongo-driver.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mongodb</groupId>
-                <artifactId>mongodb-driver-async</artifactId>
-                <version>${mongo-driver.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
@@ -146,14 +127,10 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
-            <!-- for samples-->
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.30</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

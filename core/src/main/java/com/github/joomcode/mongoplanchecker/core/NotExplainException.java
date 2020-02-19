@@ -1,11 +1,9 @@
 package com.github.joomcode.mongoplanchecker.core;
 
-import org.bson.Document;
-
 public class NotExplainException extends RuntimeException {
-  private final Document doc;
+  private final String doc;
 
-  public NotExplainException(Document doc) {
+  public NotExplainException(String doc) {
     this.doc = doc;
   }
 
