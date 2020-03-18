@@ -44,7 +44,7 @@
         <mongo-driver.version>3.12.2</mongo-driver.version>
         <mongo-reactivestreams.version>1.13.1</mongo-reactivestreams.version>
         <mongo-driver4.version>4.0.0</mongo-driver4.version>
-        <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
+        <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
         <junit.version>5.6.0</junit.version>
 
         <java.version>1.8</java.version>
