@@ -1,12 +1,12 @@
 package com.github.joomcode.mongoplanchecker.core;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.bson.BsonDocument;
+import org.bson.BsonValue;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
 public final class PlanChecker {
-
   public static Bson explainModifier() {
     return new Document("$explain", true);
   }
@@ -17,6 +17,10 @@ public final class PlanChecker {
   private final AtomicInteger sortsToIgnore = new AtomicInteger();
 
   public Violations getViolations(Document plan) {
+    return getViolations(plan, 0);
+  }
+
+  public Violations getViolations(BsonDocument plan) {
     return getViolations(plan, 0);
   }
 
@@ -43,14 +47,14 @@ public final class PlanChecker {
         || sortsToIgnore.get() > 0;
   }
 
-  public Violations getViolations(Document plan, int skip) {
-    Document queryPlanner = (Document) plan.get("queryPlanner");
+  public Violations getViolations(BsonDocument plan, int skip) {
+    BsonValue queryPlanner = plan.get("queryPlanner");
     if (queryPlanner == null) {
-      throw new NotExplainException(plan);
+      throw new NotExplainException(plan.toJson());
     }
     Violations.Builder resultBuilder = new Violations.Builder();
-    checkExcessRead((Document) plan.get("executionStats"), skip, resultBuilder);
-    traverseStage((Document) queryPlanner.get("winningPlan"), resultBuilder);
+    checkExcessRead(plan.get("executionStats").asDocument(), skip, resultBuilder);
+    traverseStage(queryPlanner.asDocument().get("winningPlan").asDocument(), resultBuilder);
 
     if (resultBuilder.broadcast && broadcastsToIgnore.get() > 0) {
       if (broadcastsToIgnore.decrementAndGet() >= 0) {
@@ -87,37 +91,42 @@ public final class PlanChecker {
     return resultBuilder.build();
   }
 
+  public Violations getViolations(Document plan, int skip) {
+    return getViolations(plan.toBsonDocument(Object.class, Util.CODEC_REGISTRY), skip);
+  }
+
   private static void checkExcessRead(
-      Document executionStats, int skip, Violations.Builder violationsBuilder) {
-    Integer nReturned = (Integer) executionStats.get("nReturned");
-    Integer totalDocsExamined = (Integer) executionStats.get("totalDocsExamined");
-    Integer totalKeysExamined = (Integer) executionStats.get("totalKeysExamined");
+      BsonDocument executionStats, int skip, Violations.Builder violationsBuilder) {
+    int nReturned = executionStats.get("nReturned").asNumber().intValue();
+    int totalDocsExamined = executionStats.get("totalDocsExamined").asNumber().intValue();
+    int totalKeysExamined = executionStats.get("totalKeysExamined").asNumber().intValue();
     int needExamine = nReturned + skip + 1; // to work around zero returning
     if (needExamine < totalDocsExamined / 4 || needExamine < totalKeysExamined / 8) {
       violationsBuilder.excessRead = true;
     }
   }
 
-  private static void traverseStage(Document inputStage, Violations.Builder violationsBuilder) {
-    List<Document> shards = (List<Document>) inputStage.get("shards");
+  private static void traverseStage(BsonDocument inputStage, Violations.Builder violationsBuilder) {
+    BsonValue shards = inputStage.get("shards");
     if (shards != null) {
-      if (shards.size() > 1) {
+      if (shards.asArray().size() > 1) {
         violationsBuilder.broadcast = true;
       }
-      traverseStage((Document) shards.get(0).get("winningPlan"), violationsBuilder);
+      traverseStage(
+          shards.asArray().get(0).asDocument().get("winningPlan").asDocument(), violationsBuilder);
       return;
     }
 
-    if ("COLLSCAN".equals(inputStage.get("stage"))) {
+    if ("COLLSCAN".equals(inputStage.get("stage").asString().getValue())) {
       violationsBuilder.collscans++;
     }
-    if ("SORT".equals(inputStage.get("stage"))) {
+    if ("SORT".equals(inputStage.get("stage").asString().getValue())) {
       violationsBuilder.sorts++;
     }
 
-    inputStage = (Document) inputStage.get("inputStage");
-    if (inputStage != null) {
-      traverseStage(inputStage, violationsBuilder);
+    BsonValue innerInputStage = inputStage.get("inputStage");
+    if (innerInputStage != null) {
+      traverseStage(innerInputStage.asDocument(), violationsBuilder);
     }
   }
 }

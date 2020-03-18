@@ -1,18 +1,24 @@
 package com.github.joomcode.mongoplanchecker.core;
 
+import org.bson.BsonDocument;
 import org.bson.Document;
 
 public class BadPlanException extends IllegalStateException {
 
-  private final Document plan;
+  private final String plan;
   private final Violations violations;
 
   public BadPlanException(Document plan, Violations violations) {
-    this.plan = plan;
+    this.plan = plan.toBsonDocument(Void.class, Util.CODEC_REGISTRY).toJson();
     this.violations = violations;
   }
 
-  public Document getPlan() {
+  public BadPlanException(BsonDocument plan, Violations violations) {
+    this.plan = plan.toJson();
+    this.violations = violations;
+  }
+
+  public String getPlan() {
     return plan;
   }
 
