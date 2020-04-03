@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.joomcode.mongo-plan-checker</groupId>
@@ -43,8 +44,9 @@
 
         <mongo-driver.version>3.12.2</mongo-driver.version>
         <mongo-reactivestreams.version>1.13.1</mongo-reactivestreams.version>
-        <mongo-driver4.version>4.0.0</mongo-driver4.version>
-        <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
+        <mongo-driver4.version>4.0.1</mongo-driver4.version>
+        <spring-boot22.version>2.2.6.RELEASE</spring-boot22.version>
+        <spring-boot23.version>2.3.0.M4</spring-boot23.version>
         <junit.version>5.6.0</junit.version>
 
         <java.version>1.8</java.version>
@@ -55,10 +57,12 @@
         <module>sync</module>
         <module>sync4</module>
         <module>async</module>
-        <module>spring-data-sync</module>
         <module>reactivestreams</module>
         <module>reactivestreams4</module>
-        <module>spring-data-reactive</module>
+        <module>spring-data2-sync</module>
+        <module>spring-data2-reactive</module>
+        <module>spring-data3-sync</module>
+        <module>spring-data3-reactive</module>
     </modules>
 
     <profiles>
@@ -159,7 +163,7 @@
                         </goals>
                         <configuration>
                             <rules>
-                                <DependencyConvergence />
+                                <DependencyConvergence/>
                                 <requireJavaVersion>
                                     <version>1.8.0</version>
                                 </requireJavaVersion>
@@ -267,4 +271,12 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
+    </repositories>
 </project>

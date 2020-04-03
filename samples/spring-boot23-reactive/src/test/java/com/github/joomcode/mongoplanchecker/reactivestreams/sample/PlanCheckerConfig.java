@@ -1,0 +1,44 @@
+package com.github.joomcode.mongoplanchecker.reactivestreams.sample;
+
+import com.github.joomcode.mongoplanchecker.core.PlanChecker;
+import com.github.joomcode.mongoplanchecker.reactivestreams.data.PlanCheckerReactiveMongoDatabaseFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.ReactiveMongoDatabaseFactory;
+import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguration;
+
+@Configuration
+public class PlanCheckerConfig extends AbstractReactiveMongoConfiguration {
+
+  @Bean
+  public PlanChecker planChecker() {
+    return new PlanChecker();
+  }
+
+  @Bean
+  public BeanPostProcessor mongoDbFactoryPostProcessor() {
+    return new BeanPostProcessor() {
+      @Override
+      public Object postProcessAfterInitialization(Object bean, String beanName)
+          throws BeansException {
+        if (bean instanceof ReactiveMongoDatabaseFactory) {
+          return new PlanCheckerReactiveMongoDatabaseFactory(
+              (ReactiveMongoDatabaseFactory) bean, planChecker());
+        }
+        return bean;
+      }
+    };
+  }
+
+  @Override
+  protected String getDatabaseName() {
+    return "test";
+  }
+
+  @Override
+  protected boolean autoIndexCreation() {
+    return true;
+  }
+}

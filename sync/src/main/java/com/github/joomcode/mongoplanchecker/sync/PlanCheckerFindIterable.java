@@ -11,6 +11,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoIterable;
 import com.mongodb.client.model.Collation;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -23,8 +24,8 @@ public class PlanCheckerFindIterable<TResult> implements FindIterable<TResult> {
   private int skip;
 
   public PlanCheckerFindIterable(FindIterable<TResult> iterable, PlanChecker checker) {
-    this.iterable = iterable;
-    this.checker = checker;
+    this.iterable = Objects.requireNonNull(iterable);
+    this.checker = Objects.requireNonNull(checker);
   }
 
   @Override
