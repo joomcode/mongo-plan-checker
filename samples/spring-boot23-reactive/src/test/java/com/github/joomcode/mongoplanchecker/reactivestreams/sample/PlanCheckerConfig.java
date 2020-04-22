@@ -7,10 +7,9 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.ReactiveMongoDatabaseFactory;
-import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguration;
 
 @Configuration
-public class PlanCheckerConfig extends AbstractReactiveMongoConfiguration {
+public class PlanCheckerConfig {
 
   @Bean
   public PlanChecker planChecker() {
@@ -30,15 +29,5 @@ public class PlanCheckerConfig extends AbstractReactiveMongoConfiguration {
         return bean;
       }
     };
-  }
-
-  @Override
-  protected String getDatabaseName() {
-    return "test";
-  }
-
-  @Override
-  protected boolean autoIndexCreation() {
-    return true;
   }
 }

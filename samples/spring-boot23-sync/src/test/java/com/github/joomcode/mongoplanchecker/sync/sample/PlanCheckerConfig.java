@@ -7,10 +7,9 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
-import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 
 @Configuration
-public class PlanCheckerConfig extends AbstractMongoClientConfiguration {
+public class PlanCheckerConfig {
 
   @Bean
   public PlanChecker planChecker() {
@@ -29,15 +28,5 @@ public class PlanCheckerConfig extends AbstractMongoClientConfiguration {
         return bean;
       }
     };
-  }
-
-  @Override
-  protected String getDatabaseName() {
-    return "test";
-  }
-
-  @Override
-  protected boolean autoIndexCreation() {
-    return true;
   }
 }
