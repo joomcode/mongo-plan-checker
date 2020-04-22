@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/joomcode/mongo-plan-checker.svg?branch=master)](https://travis-ci.com/joomcode/mongo-plan-checker)
+[![Github Actions Status](https://github.com/joomcode/mongo-plan-checker/workflows/CI/badge.svg)](https://github.com/joomcode/mongo-plan-checker/actions)
 
 Have you ever bring you mongo cluster to its knees rolling update with a query COLLSCAN-ing some collection?
 This small library can prevent this. 
