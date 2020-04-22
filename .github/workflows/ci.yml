@@ -18,4 +18,4 @@ jobs:
       with:
         java-version: ${{ matrix.java }}
     - name: Build
-      run: ./mvnw clean verify -Pdev
+      run: ./mvnw clean verify -Pdev --no-transfer-progress
