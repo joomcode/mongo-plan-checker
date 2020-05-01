@@ -22,13 +22,13 @@ public class PlanCheckerReactiveMongoDatabaseFactory implements ReactiveMongoDat
   }
 
   @Override
-  public MongoDatabase getMongoDatabase() throws DataAccessException {
-    return new PlanCheckerMongoDatabase(f.getMongoDatabase(), checker);
+  public Mono<MongoDatabase> getMongoDatabase() throws DataAccessException {
+    return f.getMongoDatabase().map(d -> new PlanCheckerMongoDatabase(d, checker));
   }
 
   @Override
-  public MongoDatabase getMongoDatabase(String dbName) throws DataAccessException {
-    return new PlanCheckerMongoDatabase(f.getMongoDatabase(dbName), checker);
+  public Mono<MongoDatabase> getMongoDatabase(String dbName) throws DataAccessException {
+    return f.getMongoDatabase(dbName).map(d -> new PlanCheckerMongoDatabase(d, checker));
   }
 
   @Override
