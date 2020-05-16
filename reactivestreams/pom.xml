@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.joomcode.mongo-plan-checker</groupId>
         <artifactId>mongo-plan-checker-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1</version>
     </parent>
 
     <artifactId>mongo-plan-checker-reactivestreams</artifactId>
