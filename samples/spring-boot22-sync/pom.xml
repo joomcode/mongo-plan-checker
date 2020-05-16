@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.joomcode.mongo-plan-checker</groupId>
         <artifactId>mongo-plan-checker-samples</artifactId>
-        <version>0.0.1</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>mongo-plan-checker-sync-spring-boot22-sample</artifactId>
