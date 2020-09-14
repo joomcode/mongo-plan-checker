@@ -2,6 +2,7 @@ package com.github.joomcode.mongoplanchecker.reactivestreams;
 
 import com.github.joomcode.mongoplanchecker.core.PlanChecker;
 import com.mongodb.ClientSessionOptions;
+import com.mongodb.connection.ClusterDescription;
 import com.mongodb.reactivestreams.client.ChangeStreamPublisher;
 import com.mongodb.reactivestreams.client.ClientSession;
 import com.mongodb.reactivestreams.client.ListDatabasesPublisher;
@@ -114,5 +115,10 @@ public class PlanCheckerMongoClient implements MongoClient {
   @Override
   public Publisher<ClientSession> startSession(ClientSessionOptions clientSessionOptions) {
     return client.startSession(clientSessionOptions);
+  }
+
+  @Override
+  public ClusterDescription getClusterDescription() {
+    return client.getClusterDescription();
   }
 }

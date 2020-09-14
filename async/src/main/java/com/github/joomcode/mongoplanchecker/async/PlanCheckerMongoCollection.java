@@ -102,7 +102,7 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
 
   private <T> void check(
       Bson filter,
-      Bson hint,
+      @Nullable Bson hint,
       SingleResultCallback<T> callback,
       Consumer<MongoCollection<TDocument>> realOperation) {
     check(filter, hint, null, callback, realOperation);
@@ -110,7 +110,7 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
 
   private <T> void check(
       Bson filter,
-      Collation collation,
+      @Nullable Collation collation,
       SingleResultCallback<T> callback,
       Consumer<MongoCollection<TDocument>> realOperation) {
     check(filter, null, collation, callback, realOperation);
@@ -157,7 +157,7 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
   private <T> void check(
       ClientSession clientSession,
       Bson filter,
-      Bson hint,
+      @Nullable Bson hint,
       SingleResultCallback<T> callback,
       Consumer<MongoCollection<TDocument>> realOperation) {
     check(clientSession, filter, hint, null, callback, realOperation);
@@ -166,7 +166,7 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
   private <T> void check(
       ClientSession clientSession,
       Bson filter,
-      Collation collation,
+      @Nullable Collation collation,
       SingleResultCallback<T> callback,
       Consumer<MongoCollection<TDocument>> realOperation) {
     check(clientSession, filter, null, collation, callback, realOperation);

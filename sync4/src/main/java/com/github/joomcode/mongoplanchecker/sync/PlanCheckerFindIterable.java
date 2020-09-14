@@ -203,4 +203,10 @@ public class PlanCheckerFindIterable<TResult> implements FindIterable<TResult> {
     iterable.showRecordId(showRecordId);
     return this;
   }
+
+  @Override
+  public FindIterable<TResult> allowDiskUse(Boolean allowDiskUse) {
+    iterable.allowDiskUse(allowDiskUse);
+    return this;
+  }
 }

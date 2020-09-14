@@ -95,7 +95,7 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
   }
 
   private <T> Publisher<T> check(
-      Bson filter, Collation collation, Supplier<Publisher<T>> realPublisher) {
+      Bson filter, @Nullable Collation collation, Supplier<Publisher<T>> realPublisher) {
     return check(filter, null, collation, realPublisher);
   }
 
@@ -128,7 +128,7 @@ public class PlanCheckerMongoCollection<TDocument> implements MongoCollection<TD
   private <T> Publisher<T> check(
       ClientSession clientSession,
       Bson filter,
-      Collation collation,
+      @Nullable Collation collation,
       Supplier<Publisher<T>> realPublisher) {
     return check(clientSession, filter, null, collation, realPublisher);
   }
