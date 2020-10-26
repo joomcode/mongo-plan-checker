@@ -47,6 +47,13 @@ public final class PlanChecker {
         || sortsToIgnore.get() > 0;
   }
 
+  public void resetIgnores() {
+    broadcastsToIgnore.set(0);
+    collscansToIgnore.set(0);
+    excessReadsToIgnore.set(0);
+    sortsToIgnore.set(0);
+  }
+
   public Violations getViolations(BsonDocument plan, int skip) {
     BsonValue queryPlanner = plan.get("queryPlanner");
     if (queryPlanner == null) {
