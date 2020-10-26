@@ -4,7 +4,7 @@
 
     <groupId>com.github.joomcode.mongo-plan-checker</groupId>
     <artifactId>mongo-plan-checker-parent</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <packaging>pom</packaging>
 
     <name>Mongo plan checker</name>
@@ -19,7 +19,7 @@
         <connection>scm:git:git://github.com/joomcode/mongo-plan-checker.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/joomcode/mongo-plan-checker.git</developerConnection>
         <url>https://github.com/joomcode/mongo-plan-checker</url>
-        <tag>HEAD</tag>
+        <tag>0.0.2</tag>
     </scm>
 
     <developers>
