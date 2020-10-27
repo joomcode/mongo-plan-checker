@@ -18,5 +18,5 @@ cache:
 
 script: 
   - ./mvnw clean verify -Pdev
-  - ./mvnw clean package -Prelease -DskipTests
+  - ./mvnw package -Prelease -DskipTests
 
