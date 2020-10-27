@@ -16,5 +16,7 @@ cache:
     - $HOME/.m2/repository
     - $HOME/.embedmongo/linux #for samples
 
-script: ./mvnw clean verify -Pdev
+script: 
+  - ./mvnw clean verify -Pdev
+  - ./mvnw clean package -Prelease -DskipTests
 
