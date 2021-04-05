@@ -44,6 +44,7 @@
         <mongo-driver.version>3.12.8</mongo-driver.version>
         <mongo-reactivestreams.version>1.13.1</mongo-reactivestreams.version>
         <mongo-driver4.version>4.1.2</mongo-driver4.version>
+        <mongo-driver42.version>4.2.2</mongo-driver42.version>
         <spring-boot22.version>2.2.13.RELEASE</spring-boot22.version>
         <spring-boot23.version>2.4.4</spring-boot23.version>
         <junit.version>5.7.1</junit.version>
@@ -55,9 +56,11 @@
         <module>core</module>
         <module>sync</module>
         <module>sync4</module>
+        <module>sync42</module>
         <module>async</module>
         <module>reactivestreams</module>
         <module>reactivestreams4</module>
+        <module>reactivestreams42</module>
         <module>spring-data2-sync</module>
         <module>spring-data2-reactive</module>
         <module>spring-data3-sync</module>
