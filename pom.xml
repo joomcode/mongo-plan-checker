@@ -41,12 +41,12 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <mongo-driver.version>3.12.7</mongo-driver.version>
+        <mongo-driver.version>3.12.8</mongo-driver.version>
         <mongo-reactivestreams.version>1.13.1</mongo-reactivestreams.version>
-        <mongo-driver4.version>4.1.1</mongo-driver4.version>
-        <spring-boot22.version>2.2.11.RELEASE</spring-boot22.version>
-        <spring-boot23.version>2.4.0</spring-boot23.version>
-        <junit.version>5.7.0</junit.version>
+        <mongo-driver4.version>4.1.2</mongo-driver4.version>
+        <spring-boot22.version>2.2.13.RELEASE</spring-boot22.version>
+        <spring-boot23.version>2.4.4</spring-boot23.version>
+        <junit.version>5.7.1</junit.version>
 
         <java.version>1.8</java.version>
     </properties>
@@ -234,14 +234,7 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.0.4</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.github.spotbugs</groupId>
-                            <artifactId>spotbugs</artifactId>
-                            <version>4.1.2</version>
-                        </dependency>
-                    </dependencies>
+                    <version>4.2.2</version>
                     <configuration>
                         <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>
                         <fork>false</fork>
