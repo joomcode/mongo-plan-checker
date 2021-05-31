@@ -44,10 +44,11 @@
         <mongo-driver.version>3.12.8</mongo-driver.version>
         <mongo-reactivestreams.version>1.13.1</mongo-reactivestreams.version>
         <mongo-driver4.version>4.1.2</mongo-driver4.version>
-        <mongo-driver42.version>4.2.2</mongo-driver42.version>
+        <mongo-driver42.version>4.2.3</mongo-driver42.version>
         <spring-boot22.version>2.2.13.RELEASE</spring-boot22.version>
-        <spring-boot23.version>2.4.5</spring-boot23.version>
-        <junit.version>5.7.1</junit.version>
+        <spring-boot23.version>2.4.6</spring-boot23.version>
+        <spring-boot25.version>2.5.0</spring-boot25.version>
+        <junit.version>5.7.2</junit.version>
 
         <java.version>1.8</java.version>
     </properties>
@@ -65,6 +66,8 @@
         <module>spring-data2-reactive</module>
         <module>spring-data3-sync</module>
         <module>spring-data3-reactive</module>
+        <module>spring-data32-sync</module>
+        <module>spring-data32-reactive</module>
     </modules>
 
     <profiles>
@@ -237,7 +240,7 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.2.2</version>
+                    <version>4.2.3</version>
                     <configuration>
                         <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>
                         <fork>false</fork>
