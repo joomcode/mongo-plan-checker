@@ -11,6 +11,10 @@
     <artifactId>mongo-plan-checker-samples</artifactId>
     <packaging>pom</packaging>
 
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
     <modules>
         <module>spring-boot22-sync</module>
         <module>spring-boot22-reactive</module>

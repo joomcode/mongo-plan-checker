@@ -12,6 +12,10 @@
     <artifactId>mongo-plan-checker-testutil</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.mongodb</groupId>

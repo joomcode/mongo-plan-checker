@@ -48,10 +48,10 @@ Or you may use our extensions for spring-data
 You are welcome!
 ### Building
 - Ensure docker is installed and available for current user
-- `./mvnw clean verify -Pdev`
+- `./mvnw clean verify`
 - Code formatting is enforced with [google-java-format](https://github.com/google/google-java-format).
 You may ensure code is properly formatted with `./mvnw com.coveo:fmt-maven-plugin:format`
 ### Tag new release
-* `./mvnw release:prepare -Pdev`
+* `./mvnw release:prepare`
 * `git clean -f`
 
