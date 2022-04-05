@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.github.joomcode.mongo-plan-checker</groupId>
+        <groupId>com.joom.mongo-plan-checker</groupId>
         <artifactId>mongo-plan-checker-parent</artifactId>
-        <version>0.0.3-SNAPSHOT</version>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>mongo-plan-checker-reactivestreams</artifactId>
