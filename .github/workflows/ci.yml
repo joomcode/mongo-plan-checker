@@ -28,4 +28,4 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
     - name: Build
-      run: ./mvnw clean verify -Pdev --no-transfer-progress
+      run: ./mvnw clean verify --no-transfer-progress
