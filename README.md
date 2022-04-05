@@ -27,22 +27,22 @@ Depending on what driver you use you need
 Or you may use our extensions for spring-data
 - `com.joom.mongo-plan-checker:mongo-plan-checker-sync-spring-data2` for spring-data version 2.x (used in spring-boot 2.2.x)
 
-   and activate it similar to our sample [spring-boot22-sample](samples/spring-boot22-sync/src/test/java/com/github/joomcode/mongoplanchecker/sync/sample/PlanCheckerConfig.java) 
+   and activate it similar to our sample [spring-boot22-sample](samples/spring-boot22-sync/src/test/java/com/joom/mongoplanchecker/sync/sample/PlanCheckerConfig.java) 
 - `com.joom.mongo-plan-checker:mongo-plan-checker-sync-spring-data3` for spring-data version 3.0.x and 3.1.x (used in spring-boot 2.3.x and 2.4.x)
 
-   and activate it similar to our sample [spring-boot23-sample](samples/spring-boot23-sync/src/test/java/com/github/joomcode/mongoplanchecker/sync/sample/PlanCheckerConfig.java) 
+   and activate it similar to our sample [spring-boot23-sample](samples/spring-boot23-sync/src/test/java/com/joom/mongoplanchecker/sync/sample/PlanCheckerConfig.java) 
 - `com.joom.mongo-plan-checker:mongo-plan-checker-sync-spring-data32` for spring-data version 3.2.x and onwards (used in spring-boot 2.5.x and 2.6.x)
 
-  and activate it similar to our sample [spring-boot25-sample](samples/spring-boot25-sync/src/test/java/com/github/joomcode/mongoplanchecker/sync/sample/PlanCheckerConfig.java)
+  and activate it similar to our sample [spring-boot25-sample](samples/spring-boot25-sync/src/test/java/com/joom/mongoplanchecker/sync/sample/PlanCheckerConfig.java)
 - `com.joom.mongo-plan-checker:mongo-plan-checker-reactivestreams-spring-data2` for spring-data version 2.x (used in spring-boot 2.2.x)
 
-   and activate it similar to our sample [spring-boot22-reactive-sample](samples/spring-boot22-reactive/src/test/java/com/github/joomcode/mongoplanchecker/reactivestreams/sample/PlanCheckerConfig.java)
+   and activate it similar to our sample [spring-boot22-reactive-sample](samples/spring-boot22-reactive/src/test/java/com/joom/mongoplanchecker/reactivestreams/sample/PlanCheckerConfig.java)
 - `com.joom.mongo-plan-checker:mongo-plan-checker-reactivestreams-spring-data3` for spring-data version 3.0.x and 3.1.x (used in spring-boot 2.3.x and 2.4.x)
 
-   and activate it similar to our sample [spring-boot23-reactive-sample](samples/spring-boot23-reactive/src/test/java/com/github/joomcode/mongoplanchecker/reactivestreams/sample/PlanCheckerConfig.java)
+   and activate it similar to our sample [spring-boot23-reactive-sample](samples/spring-boot23-reactive/src/test/java/com/joom/mongoplanchecker/reactivestreams/sample/PlanCheckerConfig.java)
 - `com.joom.mongo-plan-checker:mongo-plan-checker-reactivestreams-spring-data32` for spring-data version 3.2.x and onwards (used in spring-boot 2.5.x and 2.6.x)
 
-  and activate it similar to our sample [spring-boot25-reactive-sample](samples/spring-boot25-reactive/src/test/java/com/github/joomcode/mongoplanchecker/reactivestreams/sample/PlanCheckerConfig.java)
+  and activate it similar to our sample [spring-boot25-reactive-sample](samples/spring-boot25-reactive/src/test/java/com/joom/mongoplanchecker/reactivestreams/sample/PlanCheckerConfig.java)
 
 # Contributing
 You are welcome!
