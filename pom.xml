@@ -47,7 +47,7 @@
         <mongo-driver42.version>4.2.3</mongo-driver42.version>
         <spring-boot22.version>2.2.13.RELEASE</spring-boot22.version>
         <spring-boot23.version>2.4.13</spring-boot23.version>
-        <spring-boot25.version>2.5.9</spring-boot25.version>
+        <spring-boot25.version>2.5.12</spring-boot25.version>
         <junit.version>5.8.2</junit.version>
 
         <java.version>1.8</java.version>
@@ -90,11 +90,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>1.7.30</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -104,7 +99,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.10.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -126,7 +121,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.3.2</version>
                 <configuration>
                     <source>8</source>
                     <doclint>none</doclint>
@@ -143,7 +138,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0-M3</version>
+                <version>3.0.0</version>
                 <executions>
                     <execution>
                         <id>enforce-dependencies</id>
@@ -152,7 +147,8 @@
                         </goals>
                         <configuration>
                             <rules>
-                                <DependencyConvergence />
+                                <!-- TODO our testutil is not compatible with new enforcer convergence-->
+                                <!--<DependencyConvergence />-->
                                 <requireJavaVersion>
                                     <version>1.8.0</version>
                                 </requireJavaVersion>
@@ -205,6 +201,7 @@
             <plugin>
                 <groupId>com.coveo</groupId>
                 <artifactId>fmt-maven-plugin</artifactId>
+                <!-- TODO  newer versions do not work with java 17-->
                 <version>2.9</version>
                 <executions>
                     <execution>
@@ -220,7 +217,7 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.2.3</version>
+                    <version>4.6.0.0</version>
                     <configuration>
                         <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>
                         <fork>false</fork>
@@ -236,7 +233,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.8.2</version>
+                    <version>3.11.0</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-deploy-plugin</artifactId>
@@ -244,11 +241,11 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.2.0</version>
+                    <version>3.2.2</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.2.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
