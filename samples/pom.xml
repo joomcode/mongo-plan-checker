@@ -23,10 +23,21 @@
         <module>spring-boot23-reactive</module>
         <module>spring-boot25-sync</module>
         <module>spring-boot25-reactive</module>
-        <module>spring-boot3-sync</module>
-        <module>spring-boot3-reactive</module>
     </modules>
 
+
+    <profiles>
+        <profile>
+            <id>jadk17</id>
+            <activation>
+                <jdk>17</jdk>
+            </activation>
+            <modules>
+                <module>spring-boot3-sync</module>
+                <module>spring-boot3-reactive</module>
+            </modules>
+        </profile>
+    </profiles>
 
     <dependencies>
         <dependency>
