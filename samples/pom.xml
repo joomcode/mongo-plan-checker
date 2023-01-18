@@ -23,6 +23,8 @@
         <module>spring-boot23-reactive</module>
         <module>spring-boot25-sync</module>
         <module>spring-boot25-reactive</module>
+        <module>spring-boot3-sync</module>
+        <module>spring-boot3-reactive</module>
     </modules>
 
 
