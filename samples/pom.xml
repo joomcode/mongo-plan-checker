@@ -28,7 +28,7 @@
 
     <profiles>
         <profile>
-            <id>jadk17</id>
+            <id>jdk17</id>
             <activation>
                 <jdk>17</jdk>
             </activation>
