@@ -23,7 +23,6 @@ jobs:
       with:
         path: |
           ~/.m2/repository
-          ~/.embedmongo/linux
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
